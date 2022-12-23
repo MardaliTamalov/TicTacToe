@@ -4,17 +4,21 @@ import players.Computer;
 import players.Human;
 import players.Players;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.Random;
 
 public class GameProcess {
     private Character[][] field = new Character[3][3];
-    private Players [] players;
+    private Players[] players;
+    private boolean endGame;
 
     public void startGame() {
         showStartInfo();
         scheduling();
-        while (true) {
-           nextStep();
+        while (!endGame) {
+            nextStep();
         }
     }
 
@@ -47,19 +51,68 @@ public class GameProcess {
 
         if (random.nextBoolean()) {
             System.out.println("Вы ходите крестиками!");
-            players= new Players[]{new Human('X'), new Computer('O')};
+            players = new Players[]{new Human('X'), new Computer('O')};
         } else {
             System.out.println("Вы ходите ноликами!");
-            players= new Players[]{new Computer('X'), new Human('O')};
+            players = new Players[]{new Computer('X'), new Human('O')};
         }
     }
 
-    private void nextStep(){
+    private void nextStep() {
 
-        for (Players player: players){
-            System.out.println("ходит " + player);
-            player.doStep(field);
-            showField();
+        for (Players player : players) {
+            if (!endGame) {
+                System.out.println("ходит " + player);
+                player.doStep(field);
+                showField();
+                checkEndGame(player);
+            }
+
+        }
+    }
+
+    private void checkEndGame(Players player) {
+        checkWin(player);
+        if (!endGame) {
+            checkDraw();
+        }
+    }
+
+
+    private void checkWin(Players player) {
+        Character x = player.getSymbol();
+        for (int i = 0; i < field.length; i++) {
+            if (field[i][0] == x && field[i][1] == x && field[i][2] == x
+                    || field[0][i] == x && field[1][i] == x && field[2][i] == x) {
+                System.out.println("Игра окончена. " + player + " победил!");
+                endGame = true;
+            } else if (field[0][0] == x && field[1][1] == x && field[2][2] == x
+                    || field[0][2] == x && field[1][1] == x && field[2][0] == x){
+                System.out.println("Игра окончена. " + player + " победил!");
+            endGame = true;
+        }
+    }
+    }
+//            if(    field[0][0] == x && field[0][1] == x && field[0][2] == x
+//                || field[1][0] == x && field[1][1] == x && field[1][2] == x
+//                || field[2][0] == x && field[2][1] == x && field[2][2] == x
+//                || field[0][0] == x && field[1][0] == x && field[2][0] == x
+//                || field[0][1] == x && field[1][1] == x && field[2][1] == x
+//                || field[0][2] == x && field[1][2] == x && field[2][2] == x
+
+//                || field[0][0] == x && field[1][1] == x && field[2][2] == x
+//                || field[0][2] == x && field[1][1] == x && field[2][0] == x) {
+//            System.out.println("Игра окончена. "+ player+" победил!");
+//            endGame=true;
+//        }
+//    }
+
+    private void checkDraw() {
+        if (Arrays.stream(field)
+                .flatMap(Arrays::stream)
+                .allMatch(Objects::nonNull)) {
+            System.out.println("Ничья");
+            endGame = true;
         }
     }
 
