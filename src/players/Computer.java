@@ -15,145 +15,94 @@ public class Computer extends Players {
             firstStep(field);
         }
         if (!endStep) {
-            checkWin(field);
-        }
-        if (!endStep){
-            checkLose(field);
+            checkWinLose (field);
         }
         if (!endStep) {
             randomMove(field);
         }
         endStep = false;
     }
-
-    private void checkWin(Character[][] field) {
+private void checkWinLose(Character[][] field){
         Character x = getSymbol();
-        if (field[0][1] == x && field[0][2] == x || field[1][0] == x && field[2][0] == x ||
-                field[1][1] == x && field[2][2] == x) {
-            if (field[0][0] == null) {
-                field[0][0] = x;
-                endStep = true;
-            }
-        }
-        if (field[0][0] == x && field[0][2] == x || field[1][1] == x && field[2][1] == x) {
-            if (field[0][1] == null) {
-                field[0][1] = x;
-                endStep = true;
-            }
-        }
-        if (field[0][0] == x && field[0][1] == x || field[1][2] == x && field[2][2] == x ||
-                field[2][0] == x && field[1][1] == x) {
-            if (field[0][2] == null) {
-                field[0][2] = x;
-                endStep = true;
-            }
-        }
-        if (field[0][0] == x && field[2][0] == x || field[1][1] == x && field[1][2] == x) {
-            if (field[1][0] == null) {
-                field[1][0] = x;
-                endStep = true;
-            }
-        }
-        if (field[0][0] == x && field[2][2] == x || field[0][2] == x && field[2][0] == x ||
-                field[1][0] == x && field[1][2] == x || field[0][1] == x && field[2][1] == x) {
-            if (field[1][1] == null) {
-                field[1][1] = x;
-                endStep = true;
-            }
-        }
-        if (field[0][2] == x && field[2][2] == x || field[1][0] == x && field[1][1] == x) {
-            if (field[1][2] == null) {
-                field[1][2] = x;
-                endStep = true;
-            }
-        }
-        if (field[0][0] == x && field[1][0] == x || field[2][1] == x && field[2][2] == x ||
-                field[0][2] == x && field[1][1] == x) {
-            if (field[2][0] == null) {
-                field[2][0] = x;
-                endStep = true;
-            }
-        }
-        if (field[2][0] == x && field[2][2] == x || field[0][1] == x && field[1][1] == x) {
-            if (field[2][1] == null) {
-                field[2][1] = x;
-                endStep = true;
-            }
-        }
-        if (field[0][2] == x && field[1][2] == x || field[2][0] == x && field[2][1] == x
-                || field[0][0] == x && field[1][1] == x) {
-            if (field[2][2] == null) {
-                field[2][2] = x;
-                endStep = true;
-            }
-        }
-    }
 
-    private void checkLose(Character[][] field) {
-        Character x = 'X';
-        if (getSymbol() == 'X') {
-            x = 'O';
-        }
-        if (field[0][1] == x && field[0][2] == x || field[1][0] == x && field[2][0] == x ||
-                field[1][1] == x && field[2][2] == x) {
-            if (field[0][0] == null) {
-                field[0][0] = getSymbol();
-                endStep = true;
+        for (int i=0;i<2;i++){
+            if(!endStep) {
+                checkPossibilityWinLose(field, x,getSymbol());
             }
+            if (x == 'X')
+                x = 'O';
+            else
+                x='X';
         }
-        if (field[0][0] == x && field[0][2] == x || field[1][1] == x && field[2][1] == x) {
-            if (field[0][1] == null) {
-                field[0][1] =getSymbol();
-                endStep = true;
-            }
-        }
-        if (field[0][0] == x && field[0][1] == x || field[1][2] == x && field[2][2] == x ||
-                field[2][0] == x && field[1][1] == x) {
-            if (field[0][2] == null) {
-                field[0][2] = getSymbol();
-                endStep = true;
-            }
-        }
-        if (field[0][0] == x && field[2][0] == x || field[1][1] == x && field[1][2] == x) {
-            if (field[1][0] == null) {
-                field[1][0] = getSymbol();
-                endStep = true;
-            }
-        }
-        if (field[0][0] == x && field[2][2] == x || field[0][2] == x && field[2][0] == x ||
-                field[1][0] == x && field[1][2] == x || field[0][1] == x && field[2][1] == x) {
-            if (field[1][1] == null) {
-                field[1][1] = getSymbol();
-                endStep = true;
-            }
-        }
-        if (field[0][2] == x && field[2][2] == x || field[1][0] == x && field[1][1] == x) {
-            if (field[1][2] == null) {
-                field[1][2] = getSymbol();
-                endStep = true;
-            }
-        }
-        if (field[0][0] == x && field[1][0] == x || field[2][1] == x && field[2][2] == x ||
-                field[0][2] == x && field[1][1] == x) {
-            if (field[2][0] == null) {
-                field[2][0] =getSymbol();
-                endStep = true;
-            }
-        }
-        if (field[2][0] == x && field[2][2] == x || field[0][1] == x && field[1][1] == x) {
-            if (field[2][1] == null) {
-                field[2][1] = getSymbol();
-                endStep = true;
-            }
-        }
-        if (field[0][2] == x && field[1][2] == x || field[2][0] == x && field[2][1] == x
-                || field[0][0] == x && field[1][1] == x) {
-            if (field[2][2] == null) {
-                field[2][2] = getSymbol();
-                endStep = true;
-            }
-        }
+}
 
+    private void checkPossibilityWinLose(Character[][] field, Character x, Character y) {
+      if (field[0][0] == null) {
+            if (field[0][1] == x  && field[0][2] == x || field[1][0] == x && field[2][0] == x || field[1][1] == x && field[2][2] == x) {
+                field[0][0] = y;
+                endStep=true;
+                return;
+            }
+        }
+        if (field[0][1] == null) {
+            if (field[0][0] == x && field[0][2] == x || field[1][1] == x && field[2][1] == x) {
+                field[0][1] = y;
+                endStep=true;
+                return;
+            }
+        }
+        if (field[0][2] == null) {
+            if (field[0][0] == x && field[0][1] == x || field[1][2] == x && field[2][2] == x ||
+                    field[2][0] == x && field[1][1] == x) {
+                field[0][2] = y;
+                endStep=true;
+                return;
+            }
+        }
+        if (field[1][0] == null) {
+            if (field[0][0] == x && field[2][0] == x || field[1][1] == x && field[1][2] == x) {
+                field[1][0] = y;
+                endStep=true;
+                return;
+            }
+        }
+        if (field[1][1] == null) {
+            if (field[0][0] == x && field[2][2] == x || field[0][2] == x && field[2][0] == x ||
+                    field[1][0] == x && field[1][2] == x || field[0][1] == x && field[2][1] == x) {
+                field[1][1] = y;
+                endStep=true;
+                return;
+            }
+        }
+        if (field[1][2] == null) {
+            if (field[0][2] == x && field[2][2] == x || field[1][0] == x && field[1][1] == x) {
+                field[1][2] = y;
+                endStep=true;
+                return;
+            }
+        }
+        if (field[2][0] == null) {
+            if (field[0][0] == x && field[1][0] == x || field[2][1] == x && field[2][2] == x ||
+                    field[0][2] == x && field[1][1] == x) {
+                field[2][0] = y;
+                endStep=true;
+                return;
+            }
+        }
+        if (field[2][1] == null) {
+            if (field[2][0] == x && field[2][2] == x || field[0][1] == x && field[1][1] == x) {
+                field[2][1] = y;
+                endStep=true;
+                return;
+            }
+        }
+        if (field[2][2] == null) {
+            if (field[0][2] == x && field[1][2] == x || field[2][0] == x && field[2][1] == x
+                    || field[0][0] == x && field[1][1] == x) {
+                field[2][2] = y;
+                endStep=true;
+            }
+        }
     }
 
     private void firstStep(Character[][] field) {
@@ -168,7 +117,7 @@ public class Computer extends Players {
         while (!endStep) {
             int x = random.nextInt(3);
             int y = random.nextInt(3);
-            if (field[x][y]==null) {
+            if (field[x][y] == null) {
                 field[x][y] = getSymbol();
                 endStep = true;
             }

@@ -59,7 +59,6 @@ public class GameProcess {
     }
 
     private void nextStep() {
-
         for (Players player : players) {
             if (!endGame) {
                 System.out.println("ходит " + player);
@@ -67,7 +66,6 @@ public class GameProcess {
                 showField();
                 checkEndGame(player);
             }
-
         }
     }
 
@@ -77,7 +75,6 @@ public class GameProcess {
             checkDraw();
         }
     }
-
 
     private void checkWin(Players player) {
         Character x = player.getSymbol();
@@ -90,6 +87,7 @@ public class GameProcess {
                     || field[0][2] == x && field[1][1] == x && field[2][0] == x){
                 System.out.println("Игра окончена. " + player + " победил!");
             endGame = true;
+            return;
         }
     }
     }
